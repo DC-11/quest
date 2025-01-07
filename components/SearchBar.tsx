@@ -8,13 +8,9 @@ export default function SearchBar() {
       <View style={styles.searchBar}>
         <Ionicons name="search" size={25} color="#000" style={styles.icon} />
         <TextInput
-          placeholder="Where to?"
           style={styles.input}
           editable={false} // Prevent typing if it's static
         />
-        <Text style={styles.placeholderText}>
-          Anywhere · Any week · Add guests
-        </Text>
       </View>
       
       <Pressable style={styles.filterButton}>
@@ -29,8 +25,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   searchBar: {
     flex: 1,
@@ -38,8 +34,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#f0f0f0",
     borderRadius: 25,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+     paddingHorizontal: 10,
+    paddingVertical: 5, 
   },
   icon: {
     marginRight: 10,
@@ -47,9 +43,10 @@ const styles = StyleSheet.create({
   },
   input: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "500",
     color: "#000",
     flex: 1,
+    height:2,
   },
   placeholderText: {
     fontSize: 14,

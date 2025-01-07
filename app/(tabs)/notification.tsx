@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, StyleSheet } from "react-native";
+import { Text, View, Image, StyleSheet,Button } from "react-native";
+import notificationLayout from '@/app/pages/notificationLayout';
+import { Link } from "expo-router";
+
 
 export default function Profile() {
   const [imageUrl, setImageUrl] = useState(null); // State to store the image URL
@@ -23,12 +26,16 @@ export default function Profile() {
   return (
     <View style={styles.container}>
       {/* Check if imageUrl is available before rendering */}
+     
       {imageUrl ? (
         <Image source={{ uri: imageUrl }} style={styles.image} />
       ) : (
         <Text>Loading...</Text> // Placeholder while loading the image
       )}
       <Text>This is notifications</Text>
+      <Link href={'/pages/notificationLayout'}>
+     <Text>kdjgkj</Text>
+      </Link>
     </View>
   );
 }

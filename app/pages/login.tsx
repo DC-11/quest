@@ -1,7 +1,7 @@
 import Button1 from "@/components/Button1";
 import TextField from "@/components/TextField";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter, Link } from "expo-router";
+import { useRouter, Link,Stack } from "expo-router";
 import { useState } from "react";
 import { Text, View, TouchableOpacity, TextInput, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -11,18 +11,19 @@ export default function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const PlaceholderImage = require("@/assets/images/google.png");
   const onCreate = () => {
-    router.navigate("/signup");
+    router.navigate("/pages/signup");
   };
   const onGoogle = () => {
     router.reload;
   };
 
   const onLogin = () => {
-    router.navigate("/signup");
+    router.navigate("/pages/signup");
   };
 
   return (
     <SafeAreaView className="flex-1 justify-center items-center p-5">
+      {/* <Stack.Screen options={{title:'NestQuest' ,headerBackVisible:false}}/> */}
       <View className="w-full max-w-md gap-5">
         <Text className="font-bold text-2xl text-center">Login</Text>
         <Text className="font-bold text-xl text-center text-slate-500">
@@ -83,7 +84,7 @@ export default function Login() {
 
         {/* Create Account */}
         <TouchableOpacity activeOpacity={0.5} onPress={onCreate}>
-          <Link href={"/(pages)/signup"}>
+          <Link href={"/pages/signup"}>
           <Text className="text-blue-700 font-bold text-center text-xl">
             Create an account
           </Text>

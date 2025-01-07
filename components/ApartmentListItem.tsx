@@ -2,18 +2,24 @@ import { View, Text, StyleSheet, Image, ViewStyle } from 'react-native';
 import React from 'react';
 import apartments from '@/assets/data/appartments.json';
 import { Button } from 'react-native-paper';
+import { Pressable } from 'react-native-gesture-handler';
 
 type ApartmentListItem = {
   apartment: (typeof apartments)[0];
   containerStyle?: ViewStyle;
+  onClose?: () => void; // Add an optional onClose prop
 };
 
 const ApartmentListItem = ({
   apartment,
   containerStyle,
+  onClose,
 }: ApartmentListItem) => {
   return (
     <View style={[styles.card, containerStyle]}>
+     <Pressable onPress={onClose} style={styles.closeButton}>
+        <Text style={styles.closeButtonText}>X</Text>
+      </Pressable>
       <Image source={{ uri: apartment.image }} style={styles.image} />
       {/* */}
       <View style={styles.rightContainer}>
@@ -76,6 +82,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 'auto',
   },
+  closeButton:{
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: '#9c617e',
+    borderRadius: 15,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 10,
+
+  },
+  closeButtonText:{
+      color: 'white',
+      fontWeight: 'bold',
+      fontSize: 16,
+  }
+
  
 });
 

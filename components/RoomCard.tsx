@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,View, Text, Image, TouchableOpacity,Pressable} from 'react-native';
+import { StyleSheet,View, Text, Image, TouchableOpacity,Pressable , SafeAreaView} from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Character } from '@/assets/types';
@@ -12,7 +12,8 @@ type CharacterListItem = {
 };
 const RoomCard = ({ character }: CharacterListItem) => {
   return (
-    <Link href={`/roomprofile`} asChild>
+    <SafeAreaView>
+    <Link href={`/pages/roomprofile`} asChild>
     <Pressable style={styles.box}>
     <Image source={{ uri: character.image }} style={styles.image} />
     <View style={styles.details}>
@@ -30,6 +31,7 @@ const RoomCard = ({ character }: CharacterListItem) => {
     {/* <Link href={'/day/day1'}>to user</Link> */}
   </Pressable>
   </Link>
+  </SafeAreaView>
   );
 };
 

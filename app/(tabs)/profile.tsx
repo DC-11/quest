@@ -9,13 +9,13 @@ import { red } from "react-native-reanimated/lib/typescript/Colors";
 
 export default function ProfileScreen() {
   return (
-    <SafeAreaView className="flex-1 px-4">
-      <ScrollView>
+    
+      <ScrollView >
         <View className="flex-row justify-between ">
-          <Link href={"/login"}>
+          <Link href={"/pages/login"}>
             <Text>click me to login</Text>
           </Link>
-          <Link href={"/setting"}>
+          <Link href={"/pages/setting"}>
             <Ionicons
               name="settings-outline"
               size={32}
@@ -104,6 +104,6 @@ export default function ProfileScreen() {
           </ScrollView>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    
   );
 }

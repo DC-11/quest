@@ -27,42 +27,42 @@ export default function AirbnbScreen() {
   const snapPoints = useMemo(() => [115, '70%'], []);
 
   return (
-    
-    <GestureHandlerRootView style={{flex:1,}}>
-    <View>
-      <Stack.Screen options={{ headerShown: false }} />
 
-      <MapView  style={styles.map} region={mapRegion}>
-        {apartments.map((apartment) => (
-          <CustomMarker
-            key={apartment.id}
-            apartment={apartment}
-            onPress={() => setSelectedApartment(apartment)}
-          />
-        ))}
-      </MapView>
+    <GestureHandlerRootView style={{ flex: 1, }}>
+      <View>
+        <Stack.Screen options={{ headerShown: false }} />
 
-      {/* Display selected Apartment */}
-      {selectedApartment && (
-        <ApartmentListItem
-          apartment={selectedApartment}
-          containerStyle={styles.selectedContainer}
-        />
-      )}
-      
+        <MapView style={styles.map} region={mapRegion}>
+          {apartments.map((apartment) => (
+            <CustomMarker
+              key={apartment.id}
+              apartment={apartment}
+              onPress={() => setSelectedApartment(apartment)}
+              
+            />
+          ))}
+        </MapView>
+       
+          {/* Display selected Apartment */}
+          {selectedApartment && (
+            <ApartmentListItem
+              apartment={selectedApartment}
+              containerStyle={styles.selectedContainer}
+              onClose={() => setSelectedApartment(null)} // Pass the onClose callback
+            />
+          )}
+        <BottomSheet index={0} snapPoints={snapPoints}>
+          <View style={{}}>
+            <Text style={styles.listTitle}>Over {apartments.length} places</Text>
+            <BottomSheetFlatList
+              data={apartments}
+              contentContainerStyle={{ gap: 10, padding: 10 }}
+              renderItem={({ item }) => <ApartmentListItem apartment={item} />}
+            />
+          </View>
+        </BottomSheet>
 
-      <BottomSheet index={0} snapPoints={snapPoints}>
-        <View style={{ }}>
-          <Text style={styles.listTitle}>Over {apartments.length} places</Text>
-          <BottomSheetFlatList
-            data={apartments}
-            contentContainerStyle={{ gap: 10, padding: 10 }}
-            renderItem={({ item }) => <ApartmentListItem apartment={item} />}
-          />
-        </View>
-      </BottomSheet>
-      
-    </View>
+      </View>
     </GestureHandlerRootView>
   );
 }

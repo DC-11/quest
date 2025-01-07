@@ -16,7 +16,7 @@ const signup = () => {
     useRouter(); /* this is a react lib which will help with some built in functions */
   const [passwordVisible, setPasswordVisible] = useState(false);
   const onRegister = () => {
-    router.navigate("/login");
+    router.navigate("/pages/login");
   };
   return (
     <View className="flex-1 justify-center items-center p-5">
