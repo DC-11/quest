@@ -3,6 +3,8 @@ import { StyleSheet,View, Text, Image, TouchableOpacity,Pressable , SafeAreaView
 import { FontAwesome } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { Character } from '@/assets/types';
+import { ThemeContext } from '@/components/theme/ThemContext';
+import  { useContext, } from 'react';
 
 type DayListItem={
   day:number;
@@ -11,8 +13,10 @@ type CharacterListItem = {
   character: Character;
 };
 const RoomCard = ({ character }: CharacterListItem) => {
+  const { colors } = useContext(ThemeContext);
   return (
-    <SafeAreaView>
+    <SafeAreaView >
+      <View style={{backgroundColor: colors.background }}>
     <Link href={`/pages/roomprofile`} asChild>
     <Pressable style={styles.box}>
     <Image source={{ uri: character.image }} style={styles.image} />
@@ -31,6 +35,7 @@ const RoomCard = ({ character }: CharacterListItem) => {
     {/* <Link href={'/day/day1'}>to user</Link> */}
   </Pressable>
   </Link>
+  </View>
   </SafeAreaView>
   );
 };

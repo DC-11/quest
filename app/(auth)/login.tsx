@@ -84,7 +84,7 @@ export default function Login() {
 
         {/* Create Account */}
         <TouchableOpacity activeOpacity={0.5} onPress={onCreate}>
-          <Link href={"/pages/signup"}>
+          <Link href={"/(auth)/signup"}>
           <Text className="text-blue-700 font-bold text-center text-xl">
             Create an account
           </Text>

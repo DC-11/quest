@@ -6,13 +6,17 @@ import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import { SafeAreaView } from "react-native-safe-area-context";
 //import character from '@/assets/data/character.json';
+import { ThemeContext } from '@/components/theme/ThemContext';
 
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef, useContext } from 'react';
 
 const initialPage = 'https://rickandmortyapi.com/api/character';
 
 export default function Index() {
+
+  const { colors } = useContext(ThemeContext);
+  
   //const days = [...Array(24)].map((value, index) => index + 1)
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
@@ -61,8 +65,8 @@ export default function Index() {
     []
   );
   return (
-    <SafeAreaView>
-     <View style={{backgroundColor:'#436B74'}}>
+    <SafeAreaView style={{ backgroundColor: colors.background }} >
+     <View >
       <Header></Header>
       <SearchBar></SearchBar> 
        <FlatList

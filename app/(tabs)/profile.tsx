@@ -11,31 +11,30 @@ export default function ProfileScreen() {
   return (
     
       <ScrollView >
-        <View className="flex-row justify-between ">
-          <Link href={"/pages/login"}>
-            <Text>click me to login</Text>
-          </Link>
-          <Link href={"/pages/setting"}>
-            <Ionicons
-              name="settings-outline"
-              size={32}
-              color="black"
-              aria-label="settings"
-            ></Ionicons>
-          </Link>
-        </View>
+       
         {/* Top Section */}
-        <View className="rounded-lg p-5 mb-5 bg-stone-300">
+        <View className=" rounded-lg p-5 mb-5 bg-stone-300 border-r-4 shadow-violet-300">
           {/* Profile Picture and Info */}
-          <View className="flex-row items-center">
-            <View className="w-20 h-20 bg-red-600 rounded-full mr-5"></View>
-            <View>
-              <Text className="text-black font-bold text-xl">
-                Venu gopal iyer
-              </Text>
-              <Text className="text-gray-800">Owner</Text>
-            </View>
-          </View>
+          <View className="flex-row items-center justify-between p-4" >
+      {/* Left Section: Profile Picture and Name */}
+      <View className="flex-row items-center flex-1">
+        <View className="w-20 h-20 bg-red-600 rounded-full mr-5"></View>
+        <View>
+          <Text className="text-black font-bold text-xl">Venu Gopal Iyer</Text>
+          <Text className="text-gray-800">Owner</Text>
+        </View>
+      </View>
+
+      {/* Right Section: Settings Icon */}
+      <Link href="/pages/setting">
+        <Ionicons
+          name="settings-outline"
+          size={28}
+          color="black"
+          aria-label="settings"
+        />
+      </Link>
+    </View>
 
           {/* Reviews and Rating */}
           <View className="flex-row justify-evenly mt-5 ">
@@ -102,6 +101,11 @@ export default function ProfileScreen() {
               <View className="bg-gray-800 w-96 h-80 rounded-lg"></View>
             </View>
           </ScrollView>
+        </View>
+        <View className="flex-row justify-between pb-10">
+          <Link href={"/pages/login"}>
+            <Text>click me to login</Text>
+          </Link>
         </View>
       </ScrollView>
     
