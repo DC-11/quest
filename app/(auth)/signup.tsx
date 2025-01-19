@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, TextInput } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, Alert } from "react-native";
 import React, { useState } from "react";
 import Button1 from "@/components/Button1";
 import { useRoute } from "@react-navigation/native";
@@ -8,15 +8,60 @@ import { Ionicons } from "@expo/vector-icons";
 import { Checkbox } from "react-native-paper";
 
 const signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const handleCheckBoxChange = () => {
     setIsChecked(!isChecked);
   };
+  const handlesignup = async () => {
+    if (!email || !password || !firstname || !lastname) {
+      Alert.alert("Validation Error", "All fields are required.");
+      return;
+    } else if (!isChecked as any) {
+      Alert.alert("please accept terms and condition");
+      return;
+    }
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/signup/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          firstname,
+          lastname,
+        }),
+      });
+
+      const text = await response.text();
+      try {
+        const data = JSON.parse(text);
+        if (response.ok) {
+          Alert.alert("Success", data.message);
+          onRegister();
+        } else {
+          Alert.alert("Error", data.error || "Unknown error occurred.");
+        }
+      } catch (error) {
+        console.error("JSON parse error:", error, "Response text:", text);
+        Alert.alert("Error", "Invalid server response.");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      Alert.alert("Error", "Something went wrong. Please try again.");
+    }
+  };
+
   const router =
     useRouter(); /* this is a react lib which will help with some built in functions */
   const [passwordVisible, setPasswordVisible] = useState(false);
   const onRegister = () => {
-    router.navigate("/pages/login");
+    router.navigate("/login");
   };
   return (
     <View className="flex-1 justify-center items-center p-5">
@@ -26,16 +71,30 @@ const signup = () => {
           Join us
         </Text>
 
-        <TextInput  placeholder="Name" className=" border h-14 px-5 rounded-lg bg-white" />
-        <TextInput  placeholder="Email" className=" border h-14 px-5 rounded-lg bg-white" />
-        
+        <TextInput
+          placeholder="First Name"
+          className="border h-14 px-5 rounded-lg bg-white"
+          value={firstname}
+          onChangeText={setFirstname}
+        />
+        <TextInput
+          placeholder="Last Name"
+          className="border h-14 px-5 rounded-lg bg-white"
+          value={lastname}
+          onChangeText={setLastname}
+        />
 
-
+        <TextInput
+          placeholder="Email"
+          className=" border h-14 px-5 rounded-lg bg-white"
+          onChangeText={setEmail}
+        ></TextInput>
         <View className="relative">
           <TextInput
             placeholder="Password"
             secureTextEntry={!passwordVisible} // Toggles text visibility
             className=" border h-14 px-5 rounded-lgn bg-white rounded-lg"
+            onChangeText={setPassword}
           />
 
           <TouchableOpacity
@@ -69,7 +128,7 @@ const signup = () => {
 
         <Button1
           title={"Register"}
-          onPress={onRegister}
+          onPress={handlesignup}
           classname={"bg-black  py-3 rounded-full items-center"}
           textclassname="text-white font-bold text-lg"
         ></Button1>

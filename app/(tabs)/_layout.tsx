@@ -1,85 +1,69 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Tabs } from 'expo-router'
-import TabBar from '@/components/buttomnav/TabBar'
-import { StatusBar } from 'react-native'
-import { Redirect } from 'expo-router';
-
-
-import { Stack } from "expo-router";
+import React, { useContext } from 'react';
+import { View, Text, StatusBar } from 'react-native';
+import { Tabs, Redirect, Stack } from 'expo-router';
+import TabBar from '@/components/buttomnav/TabBar';
 import "@/global.css";
-import { ThemeProvider } from '@/components/theme/ThemContext'; // Fix typo in "ThemeContext"
-import { useContext } from "react";
-import { ThemeContext } from '@/components/theme/ThemContext'; // Fix typo in "ThemeContext"
+import { ThemeProvider, ThemeContext } from '@/components/theme/ThemContext'; // Ensure correct import path
+import { AuthProvider, AuthContext } from '@/store/authStore'; // Ensure correct import path
 
-
-
-// Wrap the RootLayout with ThemeProvider
 export default function RootLayout() {
-    const isAuthenticated=false;
+  return (
+    <AuthProvider>
+      <ThemeProvider>
+        <RootContent />
+      </ThemeProvider>
+    </AuthProvider>
+  );
+}
 
+function RootContent() {
+  const { isAuthenticated } = useContext(AuthContext); // Use the context properly
+  const { colors } = useContext(ThemeContext); // Use the context properly
 
-   // const { user } = useAuth();
-    const { colors } = useContext(ThemeContext); 
-    if (!isAuthenticated) {
-        return <Redirect href="/(auth)/login" />;
-      }
-      
-  
-    
-        return (
-            <>
-                <StatusBar
+  if (!isAuthenticated) {
+    return <Redirect href="/(auth)/login" />;
+  }
 
-                    barStyle={colors.background === '#121212' ? 'light-content' : 'dark-content'}
-                    backgroundColor={colors.background}
-                />
-
-                <Tabs
-                    tabBar={props => <TabBar {...props} />}
-                    screenOptions={{
-                        headerStyle: { backgroundColor: colors.background },
-                        headerTintColor: colors.text, // Color of header text and icons
-                    }}
-
-                >
-                    <Tabs.Screen
-                        name="index"
-                        options={{
-                            title: "Home", headerShown: false
-                        }}
-                    />
-                    <Tabs.Screen
-                        name="maps"
-                        options={{
-                            title: "maps"
-                        }}
-                    />
-                    <Tabs.Screen
-                        name="bookmark"
-                        options={{
-                            title: "bookmark"
-                        }}
-                    />
-                    <Tabs.Screen
-                        name="(profile)"
-                        options={{
-                            title: "Profile"
-                        }}
-                    />
-                </Tabs>
-            </>
-                    )
-    }
-        
-
-    
-
-
-
-
-
-
-
-
-
+  return (
+    <>
+      <StatusBar
+        barStyle={colors.background === '#121212' ? 'light-content' : 'dark-content'}
+        backgroundColor={colors.background}
+      />
+      <Tabs
+        tabBar={(props) => <TabBar {...props} />}
+        screenOptions={{
+          
+          headerStyle: { backgroundColor: colors.background, },
+          headerTintColor: colors.text, // Set color for header text and icons
+        }}
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home",
+            headerShown: false, // Hide header for the home screen
+          }}
+        />
+        <Tabs.Screen
+          name="maps"
+          options={{
+            title: "Maps",
+          }}
+        />
+        <Tabs.Screen
+          name="bookmark"
+          options={{
+            title: "Bookmark",
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profile",
+          }}
+        />
+      </Tabs>
+    </>
+  );
+}

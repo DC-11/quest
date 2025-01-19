@@ -1,11 +1,23 @@
 import { Redirect, Stack } from 'expo-router';
-//import { useAuth } from '~/context/AuthProvider';
+import { AuthProvider, AuthContext } from '@/store/authStore'; // Adjust the import path as needed
+import { useContext } from 'react';
 
 export default function Authlayout() {
-  const isAuthenticated =false;
+  return (
+    <AuthProvider>
+      <AuthWrapper />
+    </AuthProvider>
+  );
+}
+
+function AuthWrapper() {
+  const { isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated) {
     return <Redirect href="/" />;
   }
-  return <Stack />;
+
+  return <Stack  screenOptions={ {headerShown: false,
+     // Enable headers if needed
+    headerTitle: "",  } }/>;
 }
