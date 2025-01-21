@@ -24,7 +24,7 @@ export default function AirbnbScreen() {
   });
 
   // variables
-  const snapPoints = useMemo(() => [115, '70%'], []);
+  const snapPoints = useMemo(() => [65, '70%'], []);
 
   return (
 
@@ -51,9 +51,9 @@ export default function AirbnbScreen() {
               onClose={() => setSelectedApartment(null)} // Pass the onClose callback
             />
           )}
-        <BottomSheet index={0} snapPoints={snapPoints}>
-          <View style={{}}>
-            <Text style={styles.listTitle}>Over {apartments.length} places</Text>
+        <BottomSheet index={0} snapPoints={snapPoints} >
+          <View style={{}} className='bg-slate-100 rounded-2xl mt-0 '>
+            <Text style={styles.listTitle} className='mt-3'>Over {apartments.length} places</Text>
             <BottomSheetFlatList
               data={apartments}
               contentContainerStyle={{ gap: 10, padding: 10 }}

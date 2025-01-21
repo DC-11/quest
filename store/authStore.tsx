@@ -1,6 +1,6 @@
-import React, { createContext, useState, useEffect, useMemo } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Text } from 'react-native';
+import React, { createContext, useState, useEffect, useMemo } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Text } from "react-native";
 
 const AuthContext = createContext();
 
@@ -11,14 +11,14 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true); // For showing a loading state
 
   // API Base URL (use environment variables for production)
-  const API_BASE_URL = 'http://127.0.0.1:8000/api';
+  const API_BASE_URL = "http://127.0.0.1:8000/api";
 
   // Login action
   const login = async (email, password) => {
     try {
       const response = await fetch(`${API_BASE_URL}/login/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -31,12 +31,12 @@ const AuthProvider = ({ children }) => {
         setIsAuthenticated(true);
 
         // Save token to AsyncStorage
-        await AsyncStorage.setItem('token', data.token);
+        await AsyncStorage.setItem("token", data.token);
       } else {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message || "Login failed");
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       throw error;
     }
   };
@@ -50,35 +50,37 @@ const AuthProvider = ({ children }) => {
       setIsAuthenticated(false);
 
       // Remove token from AsyncStorage
-      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem("token");
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     }
   };
 
   // Check authentication status on app startup
   const initializeAuth = async () => {
     try {
-      const storedToken = await AsyncStorage.getItem('token');
+      const storedToken = await AsyncStorage.getItem("token");
       if (storedToken) {
         setToken(storedToken);
         setIsAuthenticated(true);
 
         // Optional: Fetch user details with the token
         const response = await fetch(`${API_BASE_URL}/user/`, {
-          headers: { Authorization: `Bearer ${storedToken}` },
+          headers: {
+            Authorization: `Token ${storedToken}`, // Ensure "Token" prefix
+          },
         });
 
         if (response.ok) {
           const userData = await response.json();
           setUser(userData);
         } else {
-          console.warn('Token expired or invalid');
-          //await logout();
+          console.warn("Token expired or invalid");
+          await logout();
         }
       }
     } catch (error) {
-      console.error('Auth initialization error:', error);
+      console.error("Auth initialization error:", error);
     } finally {
       setLoading(false); // Ensure loading state is cleared
     }

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import useAuthStore from '@/store/authStore';
-import _layout from '@/app/(tabs)/_layout';
+import React, { useEffect } from "react";
+import useAuthStore from "@/store/authStore";
+import _layout from "@/app/(tabs)/_layout";
 
 const App = () => {
   const { initializeAuth } = useAuthStore();
@@ -9,9 +9,7 @@ const App = () => {
     initializeAuth();
   }, [initializeAuth]);
 
-  return (
-    <_layout/>
-  );
+  return <_layout />;
 };
 
 export default App;

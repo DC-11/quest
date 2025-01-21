@@ -18,17 +18,17 @@ const RoomCard = ({ character }: CharacterListItem) => {
     <SafeAreaView >
       <View style={{backgroundColor: colors.background }}>
     <Link href={`/pages/roomprofile`} asChild>
-    <Pressable style={styles.box}>
-    <Image source={{ uri: character.image }} style={styles.image} />
+    <Pressable style={styles.box} className='pt-2 pb-0 pl-4 pr-4 border-2 border-slate-200 rounded-2xl'  >
+    <Image source={{ uri: character.image }} style={styles.image} className=' rounded-3xl'/>
     <View style={styles.details}>
       <View style={styles.footer}>
     <Text style={styles.name}>{character.name}</Text>
-    <Text style={styles.rating}>★ ehh</Text>
+    <Text style={styles.rating} className='text-black text-base'>★ ehh</Text>
     </View>
 
-    <Text style={styles.distance}>{character.name}</Text>
-    <Text style={styles.date}>{character.name}</Text>
-    <Text style={styles.price}>{character.name}</Text>
+    <Text style={styles.distance}>2.7 kilometer close</Text>
+    <Text style={styles.date}>April 3 - 9 </Text>
+    <Text className='text-lg'>Rs.1100</Text>
     
     </View>
 
@@ -44,14 +44,11 @@ export default RoomCard;
 
 const styles=StyleSheet.create({
   box: {
-      borderWidth: StyleSheet.hairlineWidth,
-      // width:100,
-      // height:100,
-      borderRadius: 10,
+  
     backgroundColor: '#fff',
     margin:2,
     overflow: 'hidden',
-    shadowColor: '#000',
+    shadowColor: '#f0f0f0',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 8,
@@ -82,22 +79,16 @@ const styles=StyleSheet.create({
       color: '#777',
       marginBottom: 10,
     },
-    price: {
-      fontSize: 16,
-      color: '#333',
-    },
 
-    rating:{
-      fontSize: 14,
-      color: '#777',
+    
       
 
-    },
+    
 
     image: {
       width: '100%',       // Full width
-      height: 450,         // Fixed height
-     //aspectRatio: 16 / 9, // Maintain aspect ratio (16:9)
+      //height: 450,         // Fixed height
+     aspectRatio:1/1, // Maintain aspect ratio (16:9)
       resizeMode: 'cover',
     },
     footer: {

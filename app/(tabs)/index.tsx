@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     padding: 10,
-    gap: 10,
+    gap: 2,
 
   },
 
   content: {
-    gap: 10,
+    gap: 1,
 
   },
 

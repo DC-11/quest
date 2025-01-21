@@ -105,6 +105,23 @@ export default function RootLayout() {
           },
         }}
       />
+      <Stack.Screen
+        name="makePost"
+        options={{
+          headerTitle: "", // Set the title
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => router.back()} className="p-1">
+              <Text className="text-blue-600 text-2xl">←</Text>
+            </TouchableOpacity>
+          ),
+          headerTitleAlign: "center", // Align the title to the center
+
+          headerTitleStyle: {
+            fontSize: 18,
+            fontWeight: "bold",
+          },
+        }}
+      />
 
     </Stack>
   );

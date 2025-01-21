@@ -36,8 +36,7 @@ export default function Login() {
       setLoading(false); // Stop loading
 
       Alert.alert("Success", "Logged in successfully!");
-      <Redirect href='/'></Redirect>
-     
+      <Redirect href="/"></Redirect>;
     } catch (error) {
       setLoading(false); // Stop loading
       Alert.alert("Error", error.message || "Login failed.");
@@ -46,6 +45,10 @@ export default function Login() {
 
   const onCreate = () => {
     router.push("/signup");
+  };
+
+  const onForgot = () => {
+    router.push("/forgetpas");
   };
 
   const onGoogle = () => {
@@ -103,7 +106,7 @@ export default function Login() {
         )}
 
         <View className="w-full max-w-md gap-5">
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableOpacity activeOpacity={0.5} onPress={onForgot}>
             <Text className="text-right ">Forgot password ?</Text>
           </TouchableOpacity>
         </View>

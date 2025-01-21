@@ -1,19 +1,34 @@
-import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
+import { FontAwesome, MaterialIcons } from "@expo/vector-icons";
 
 const ListingScreen = () => {
+  const [isReserved, setIsReserved] = useState(false);
+  const handleReserve = () => {
+    setIsReserved(!isReserved);
+  };
   return (
     <ScrollView style={styles.container}>
       {/* Image Section */}
       <Image
-        source={{ uri: 'https://as2.ftcdn.net/v2/jpg/09/03/07/47/1000_F_903074738_gATnSFaQqGQu7qJSAZhJxtjyud8FJjxn.jpg' }} // Replace with your image URL
+        source={{
+          uri: "https://as2.ftcdn.net/v2/jpg/09/03/07/47/1000_F_903074738_gATnSFaQqGQu7qJSAZhJxtjyud8FJjxn.jpg",
+        }} // Replace with your image URL
         style={styles.image}
       />
 
       {/* Title and Location */}
       <View style={styles.section}>
-        <Text style={styles.title}>The Barn - A farm cottage by the horses</Text>
+        <Text style={styles.title}>
+          The Barn - A farm cottage by the horses
+        </Text>
         <Text style={styles.subtitle}>Farm stay in New Delhi, India</Text>
         <View style={styles.rating}>
           <FontAwesome name="star" size={16} color="#FFD700" />
@@ -53,17 +68,17 @@ const ListingScreen = () => {
       {/* Reserve Button */}
       <View style={styles.reserveContainer}>
         <Text style={styles.price}>$98 / night</Text>
-        <TouchableOpacity style={styles.reserveButton}>
-          <Text style={styles.reserveButtonText}>Reserve</Text>
+        <TouchableOpacity
+          style={isReserved ? styles.reservedButton : styles.reserveButton}
+          onPress={handleReserve}
+        >
+          {isReserved ? (
+            <Text style={styles.reserveButtonText}>Cancel</Text>
+          ) : (
+            <Text style={styles.reserveButtonText}>Reserve</Text>
+          )}
         </TouchableOpacity>
       </View>
-
-
-
-
-
-
-      
     </ScrollView>
   );
 };
@@ -71,29 +86,29 @@ const ListingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
   },
   section: {
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    borderBottomColor: "#ddd",
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 16,
-    color: '#555',
+    color: "#555",
   },
   rating: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 4,
   },
   ratingText: {
@@ -102,23 +117,23 @@ const styles = StyleSheet.create({
   },
   hostedBy: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: "600",
   },
   subText: {
-    color: '#777',
+    color: "#777",
     marginTop: 2,
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 8,
   },
   amenitiesList: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   amenity: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 8,
   },
   amenityText: {
@@ -126,27 +141,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   reserveContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopColor: "#ddd",
   },
   price: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+  },
+  reservedButton: {
+    backgroundColor: "#ff5a5f",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
   },
   reserveButton: {
-    backgroundColor: '#ff5a5f',
+    backgroundColor: "#7ce87c",
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
   },
   reserveButtonText: {
-    color: '#fff',
+    color: "black",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 
