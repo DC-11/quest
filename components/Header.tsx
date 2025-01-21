@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
-import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome, FontAwesome5 ,AntDesign,Ionicons} from '@expo/vector-icons';
 import { useFonts } from 'expo-font'
 import { Pacifico_400Regular,  } from '@expo-google-fonts/pacifico';
 import { DancingScript_400Regular } from '@expo-google-fonts/dancing-script';
@@ -36,12 +36,12 @@ const Header = () => {
 
         <TouchableOpacity style={styles.icon}>
           <Link href={`/pages/notificationLayout`}  >
-            <FontAwesome name="heart-o" size={24} color="black" />
+            <AntDesign name="notification" size={28} color="black" />
           </Link>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.icon}>
+        <TouchableOpacity style={styles.icon} className='pr-2'>
           <Link href={`/pages/chatbox`}  >
-            <FontAwesome5 name="facebook-messenger" size={24} color="black" />
+            <Ionicons name="chatbox-outline" size={28} color="black" />
           </Link>
         </TouchableOpacity>
       </View>

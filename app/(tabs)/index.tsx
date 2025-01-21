@@ -5,7 +5,7 @@ import RoomCard from "@/components/RoomCard";
 import SearchBar from "@/components/SearchBar";
 import CategoryFilter from "@/components/CategoryFilter";
 import { SafeAreaView } from "react-native-safe-area-context";
-//import character from '@/assets/data/character.json';
+import appartments from '@/assets/data/appartments.json';
 import { ThemeContext } from '@/components/theme/ThemContext';
 
 
@@ -71,7 +71,7 @@ export default function Index() {
       <SearchBar></SearchBar> 
        <FlatList
         contentContainerStyle={styles.content}
-        data={items}
+        data={appartments}
         renderItem={renderItem}
       onEndReached={() => fetchPage(nextPage)}
       onEndReachedThreshold={5}
