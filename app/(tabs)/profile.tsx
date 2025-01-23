@@ -9,6 +9,7 @@ import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import ReviewLayout from "@/components/layouts/reviewLayout"
 import PostLayout from "@/components/layouts/postLayout";
 import reviews from "@/assets/data/reviews.json";
+import appartments from "@/assets/data/appartments.json";
 
 import RoomCard from "@/components/RoomCard";
 import characters  from "@/assets/data/characters.json";
@@ -120,7 +121,7 @@ export default function ProfileScreen() {
       <GestureHandlerRootView className="flex-1  p-0 mb-3 " >
         <FlatList
         contentContainerClassName="w-200"
-          data={reviews}
+          data={appartments}
           horizontal
           //keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => <PostLayout data={item}  />}

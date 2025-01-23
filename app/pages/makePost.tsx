@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Image,
@@ -8,12 +8,18 @@ import {
   TouchableOpacity,
   ScrollView,
   Button,
+  Alert,
 } from "react-native";
+import { AuthContext } from "@/store/authStore";
+
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import * as ImagePicker from "expo-image-picker";
 
 export default function MakePost() {
+
+  const { user ,token} = useContext(AuthContext);
+
   const [image, setImage] = useState<string | null>(null);
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -24,27 +30,60 @@ export default function MakePost() {
       quality: 1,
     });
 
-    console.log(result);
+    //console.log(result);
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
   };
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
+  const [price, setPrice] = useState('');
+  const [hostFirstname, setHostFirstname] = useState('');
+  const [hostLastname, setHostLastname] = useState('');
+  const [facilities, setFacilities] = useState('');
 
-  const [formData, setFormData] = useState({
-    title: "",
-    location: "",
-    dateRange: "",
-    price: "",
-  });
+  const uploadData = async () => {
+    const data = {
+      title: title,
+      description: description,
+      location: location,
+      price: price,
+      
+      host_firstname: user.firstname,
+      host_lastname: user.lastname,
+      facilities: facilities,
+      is_available: true,
+      images: image ? [image] : [],
+    };
 
-  const handleInputChange = (field, value) => {
-    setFormData({ ...formData, [field]: value });
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/properties/create/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`, // Ensure "Token" prefix
+        },
+        body: JSON.stringify(data),
+        
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        Alert.alert('Success', 'Data uploaded successfully!');
+        console.log(result);
+      } else {
+        throw new Error('Failed to upload data');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to upload data.');
+      console.error(error);
+    }
   };
 
-  const handleSubmit = () => {
-    console.log("Submitted Data:", formData);
-  };
+  
+
 
   return (
     <ScrollView className="flex-1 p-4 bg-gray-100 mb-3">
@@ -75,8 +114,8 @@ export default function MakePost() {
           <TextInput
             className="mt-2 p-3 border border-gray-300 rounded-lg"
             placeholder="Enter title (e.g., Bootleg Portal Chemist Rick)"
-            value={formData.title}
-            onChangeText={(text) => handleInputChange("title", text)}
+            value={title}
+            onChangeText={setTitle} 
           />
         </View>
 
@@ -86,19 +125,29 @@ export default function MakePost() {
           <TextInput
             className="mt-2 p-3 border border-gray-300 rounded-lg"
             placeholder="Enter distance (e.g., 2.7 km)"
-            value={formData.location}
-            onChangeText={(text) => handleInputChange("location", text)}
+            value={location}
+            onChangeText={setLocation}
           />
         </View>
 
         {/* Date Range */}
         <View className="mb-4">
-          <Text className="text-gray-700 font-semibold">Available date</Text>
+          <Text className="text-gray-700 font-semibold">Description</Text>
           <TextInput
             className="mt-2 p-3 border border-gray-300 rounded-lg"
             placeholder="Enter date range (e.g., April 3 - 9)"
-            value={formData.dateRange}
-            onChangeText={(text) => handleInputChange("dateRange", text)}
+            value={description}
+            onChangeText={setDescription}
+          />
+        </View>
+        {/* faciitiees */}
+        <View className="mb-4">
+          <Text className="text-gray-700 font-semibold">Facilities</Text>
+          <TextInput
+            className="mt-2 p-3 border border-gray-300 rounded-lg"
+            placeholder="Enter date range (e.g., April 3 - 9)"
+            value={facilities}
+            onChangeText={setFacilities}
           />
         </View>
 
@@ -109,15 +158,15 @@ export default function MakePost() {
             className="mt-2 p-3 border border-gray-300 rounded-lg"
             placeholder="Enter price (e.g., Rs.1100)"
             keyboardType="numeric"
-            value={formData.price}
-            onChangeText={(text) => handleInputChange("price", text)}
+            value={price}
+            onChangeText={setPrice}
           />
         </View>
 
         {/* Submit Button */}
         <TouchableOpacity
           className="bg-blue-600 p-3 rounded-lg"
-          onPress={handleSubmit}
+          onPress={uploadData}
         >
           <Text className="text-center text-white font-bold">Post</Text>
         </TouchableOpacity>

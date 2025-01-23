@@ -11,7 +11,7 @@ import { ThemeContext } from '@/components/theme/ThemContext';
 
 import { useState, useEffect, useCallback, useMemo, useRef, useContext } from 'react';
 
-const initialPage = 'https://rickandmortyapi.com/api/character';
+const initialPage = 'http://127.0.0.1:8000/api/properties/feed/';
 
 export default function Index() {
 
@@ -29,12 +29,13 @@ export default function Index() {
       return;
     }
 
-    console.log('Fetching: ', url);
     setLoading(true);
     const response = await fetch(url);
     const responseJson = await response.json();
+     setItems(responseJson);
+  }
 
-    setItems((existingItems) => {
+   /*  setItems((existingItems) => {
       const newItems = responseJson.results.filter(newItem => 
         !existingItems.some(existingItem => existingItem.id === newItem.id)
       );
@@ -58,26 +59,30 @@ export default function Index() {
 
   useEffect(() => {
     fetchPage(initialPage);
-  }, []);
+  }, []); */
+
+  useEffect(() => {
+    fetchPage(initialPage);
+  }, []); 
 
   const renderItem = useCallback(
     ({ item }) => <RoomCard character={item} />,
     []
   );
   return (
-    <SafeAreaView style={{ backgroundColor: colors.background }} >
-     <View >
+    <SafeAreaView style={{ backgroundColor: colors.background, }} className="pb-10">
+     <View  className="pb-20 mb-10">
       <Header></Header>
       <SearchBar></SearchBar> 
        <FlatList
         contentContainerStyle={styles.content}
-        data={appartments}
+        data={items}
         renderItem={renderItem}
       onEndReached={() => fetchPage(nextPage)}
       onEndReachedThreshold={5}
       ListFooterComponent={() => loading && <ActivityIndicator />}
       refreshing={loading}
-      onRefresh={onRefresh}
+      //onRefresh={onRefresh}
      
       initialNumToRender={3}
       /> 

@@ -1,56 +1,71 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, StyleSheet,Button } from "react-native";
-import notificationLayout from '@/app/pages/notificationLayout';
-import { Link } from "expo-router";
+import { Text, View, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 
+// API base URL (ensure to use the correct one for your setup)
+const API_BASE_URL = "http://127.0.0.1:8000/api/properties/feed/";
 
-export default function chatProfile() {
-  const [imageUrl, setImageUrl] = useState(null); // State to store the image URL
+export default function PropertyFeed() {
+  const [properties, setProperties] = useState([]);  // Store properties data
+  const [loading, setLoading] = useState(true); // Track loading state
 
   // Function to fetch data
-  const getMoviesFromApiAsync = async () => {
+  const propertyList = async () => {
     try {
-      const response = await fetch('https://rickandmortyapi.com/api/character/2');
-      const result = await response.json();
-      setImageUrl(result.image); // Set the image URL in state
+      const response = await fetch(`${API_BASE_URL}`);
+      const result = await response.text();  // Get raw response as text for debugging
+      console.log("Raw response:", result);  // Log the raw response to check what is returned
+  
+      const data = JSON.parse(result);  // Try to parse the response as JSON
+      setProperties(data);  // Set the fetched properties into the state
     } catch (error) {
-      console.error("Error fetching data: ", error);
+      console.error("Error fetching properties:", error);
+    } finally {
+      setLoading(false);  // Stop loading
     }
   };
 
-  // Fetch data when the component mounts
+  // Fetch properties when the component mounts
   useEffect(() => {
-    getMoviesFromApiAsync();
+    propertyList();
   }, []);
 
+  // Render properties
   return (
-    <View style={styles.container}>
-      {/* Check if imageUrl is available before rendering */}
-     
-      {imageUrl ? (
-        <Image source={{ uri: imageUrl }} style={styles.image} />
-      ) : (
-        <Text>Loading...</Text> // Placeholder while loading the image
-      )}
-      <Text>This is chat</Text>
-   {/*    <Link href={'/pages/notificationLayout'}>
-     <Text>kdjgkj</Text>
-      </Link> */}
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      {loading ? (
+        <ActivityIndicator size="large" color="#0000ff" />  // Show loading indicator
+      ) : ( <Text>rya8s fiou</Text>)
+    
+  }
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f0f0f0", // Optional background color
+    padding: 10,
+  },
+  propertyCard: {
+    marginBottom: 20,
+    padding: 15,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   image: {
-    width: 300,       // Fixed width
-    height: 300,      // Fixed height
-    borderRadius: 10, // Optional: Rounded corners
-    resizeMode: "cover",
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+    resizeMode: 'cover',
+  },
+  propertyName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
   },
 });

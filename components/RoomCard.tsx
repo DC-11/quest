@@ -21,10 +21,15 @@ type CharacterListItem = {
   character: Character;
 };
 const RoomCard = ({ character }: CharacterListItem) => {
+  const firstImage = character.images && character.images.length > 0
+  ? character.images[0]
+  : "https://via.placeholder.com/300"; // Fallback image URL
+
+
   const { colors } = useContext(ThemeContext);
   const [isFavorite, setIsFavorite] = useState(false);
   return (
-    <SafeAreaView>
+    <SafeAreaView className="pb-10">
       <View style={{ backgroundColor: colors.background }}>
         <Link href={`/pages/roomprofile`} asChild>
           <Pressable
@@ -33,7 +38,7 @@ const RoomCard = ({ character }: CharacterListItem) => {
 
               <View className="relative"> 
             <Image
-              source={{ uri: character.image }}
+              source={{ uri: firstImage.image }}
               style={styles.image}
               className="border-gray-200 rounded-3xl"
             />
@@ -49,7 +54,7 @@ const RoomCard = ({ character }: CharacterListItem) => {
               <View style={styles.footer}>
                 <Text style={styles.name}>{character.title}</Text>
                 <Text style={styles.rating} className="text-black text-base">
-                  ★ ehh
+                  ★ 4.0
                 </Text>
               </View>
 

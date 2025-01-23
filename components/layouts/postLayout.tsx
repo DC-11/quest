@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import React from "react";
 import { View, Text, Image } from "react-native";
 import { Icon } from "react-native-paper";
@@ -11,12 +12,15 @@ import { Icon } from "react-native-paper";
 
 export default function PostLayout({data}){
     return (
+      
         <View className="bg-white rounded-xl mx-2 my-0 overflow-hidden shadow-lg">
+          <Link href={"/pages/roomprofile"}>
           <Image
             source={{ uri: data.image || "https://example.com/default-profile.jpg" }}
             className="w-full h-64"
             resizeMode="cover"
           />
+            </Link>
           <View className="p-4">
             <View className="flex-row justify-between items-start">
               <View>
@@ -33,7 +37,10 @@ export default function PostLayout({data}){
               </View>
             </View>
           </View>
+        
         </View>
+
+       
       );
     };
     
